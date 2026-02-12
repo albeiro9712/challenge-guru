@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Serverless
+.serverless/
+.esbuild/
+
+# Build
+dist/
+build/
+
+# Environment
+.env
+.env.*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+
+# Logs
+*.log
