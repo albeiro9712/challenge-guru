@@ -7,6 +7,19 @@ provider:
   runtime: nodejs20.x
   stage: ${opt:stage, 'dev'}
   region: us-east-1
+  environment:
+    TASKS_TABLE: !Ref TasksTable
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+            - dynamodb:Scan
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: !GetAtt TasksTable.Arn
 
 plugins:
   - serverless-esbuild
@@ -21,3 +34,17 @@ custom:
     target: node20
     platform: node
     concurrency: 10
+
+resources:
+  Resources:
+    TasksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:service}-${self:provider.stage}-tasks
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: taskId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: taskId
+            KeyType: HASH
