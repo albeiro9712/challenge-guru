@@ -30,6 +30,14 @@ functions:
           method: get
           cors: true
 
+  createTask:
+    handler: src/handlers/createTask.handler
+    events:
+      - http:
+          path: tasks
+          method: post
+          cors: true
+
 plugins:
   - serverless-esbuild
 
