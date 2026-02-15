@@ -21,6 +21,15 @@ provider:
             - dynamodb:DeleteItem
           Resource: !GetAtt TasksTable.Arn
 
+functions:
+  healthCheck:
+    handler: src/handlers/healthCheck.handler
+    events:
+      - http:
+          path: health
+          method: get
+          cors: true
+
 plugins:
   - serverless-esbuild
 
