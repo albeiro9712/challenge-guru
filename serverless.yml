@@ -38,6 +38,38 @@ functions:
           method: post
           cors: true
 
+  listTasks:
+    handler: src/handlers/listTasks.handler
+    events:
+      - http:
+          path: tasks
+          method: get
+          cors: true
+
+  getTask:
+    handler: src/handlers/getTask.handler
+    events:
+      - http:
+          path: tasks/{id}
+          method: get
+          cors: true
+
+  updateTask:
+    handler: src/handlers/updateTask.handler
+    events:
+      - http:
+          path: tasks/{id}
+          method: put
+          cors: true
+
+  deleteTask:
+    handler: src/handlers/deleteTask.handler
+    events:
+      - http:
+          path: tasks/{id}
+          method: delete
+          cors: true
+
 plugins:
   - serverless-esbuild
 
