@@ -5,7 +5,6 @@ export function success(body: unknown, statusCode = 200): APIGatewayProxyResult 
     statusCode,
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify(body),
   };
@@ -16,7 +15,6 @@ export function error(message: string, statusCode = 500): APIGatewayProxyResult 
     statusCode,
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify({ error: message }),
   };

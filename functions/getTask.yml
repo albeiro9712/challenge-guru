@@ -4,4 +4,3 @@ getTask:
     - http:
         path: tasks/{id}
         method: get
-        cors: true

@@ -4,4 +4,3 @@ healthCheck:
     - http:
         path: health
         method: get
-        cors: true

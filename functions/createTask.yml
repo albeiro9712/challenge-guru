@@ -4,4 +4,3 @@ createTask:
     - http:
         path: tasks
         method: post
-        cors: true
