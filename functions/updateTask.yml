@@ -4,4 +4,3 @@ updateTask:
     - http:
         path: tasks/{id}
         method: put
-        cors: true

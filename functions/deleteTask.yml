@@ -4,4 +4,3 @@ deleteTask:
     - http:
         path: tasks/{id}
         method: delete
-        cors: true

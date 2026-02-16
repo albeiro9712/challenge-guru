@@ -7,7 +7,6 @@ describe("response helpers", () => {
 
       expect(result.statusCode).toBe(200);
       expect(result.headers!["Content-Type"]).toBe("application/json");
-      expect(result.headers!["Access-Control-Allow-Origin"]).toBe("*");
       expect(JSON.parse(result.body)).toEqual({ data: "test" });
     });
 
@@ -39,10 +38,10 @@ describe("response helpers", () => {
       expect(JSON.parse(result.body)).toEqual({ error: "Not found" });
     });
 
-    test("should include CORS headers", () => {
+    test("should include Content-Type header", () => {
       const result = error("test");
 
-      expect(result.headers!["Access-Control-Allow-Origin"]).toBe("*");
+      expect(result.headers!["Content-Type"]).toBe("application/json");
     });
   });
 });
