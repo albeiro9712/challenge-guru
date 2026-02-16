@@ -1,0 +1,7 @@
+updateTask:
+  handler: src/handlers/updateTask.handler
+  events:
+    - http:
+        path: tasks/{id}
+        method: put
+        cors: true

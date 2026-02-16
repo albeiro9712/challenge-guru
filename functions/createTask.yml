@@ -1,0 +1,7 @@
+createTask:
+  handler: src/handlers/createTask.handler
+  events:
+    - http:
+        path: tasks
+        method: post
+        cors: true

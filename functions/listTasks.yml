@@ -1,0 +1,7 @@
+listTasks:
+  handler: src/handlers/listTasks.handler
+  events:
+    - http:
+        path: tasks
+        method: get
+        cors: true

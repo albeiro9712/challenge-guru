@@ -22,53 +22,12 @@ provider:
           Resource: !GetAtt TasksTable.Arn
 
 functions:
-  healthCheck:
-    handler: src/handlers/healthCheck.handler
-    events:
-      - http:
-          path: health
-          method: get
-          cors: true
-
-  createTask:
-    handler: src/handlers/createTask.handler
-    events:
-      - http:
-          path: tasks
-          method: post
-          cors: true
-
-  listTasks:
-    handler: src/handlers/listTasks.handler
-    events:
-      - http:
-          path: tasks
-          method: get
-          cors: true
-
-  getTask:
-    handler: src/handlers/getTask.handler
-    events:
-      - http:
-          path: tasks/{id}
-          method: get
-          cors: true
-
-  updateTask:
-    handler: src/handlers/updateTask.handler
-    events:
-      - http:
-          path: tasks/{id}
-          method: put
-          cors: true
-
-  deleteTask:
-    handler: src/handlers/deleteTask.handler
-    events:
-      - http:
-          path: tasks/{id}
-          method: delete
-          cors: true
+  - ${file(functions/healthCheck.yml)}
+  - ${file(functions/createTask.yml)}
+  - ${file(functions/listTasks.yml)}
+  - ${file(functions/getTask.yml)}
+  - ${file(functions/updateTask.yml)}
+  - ${file(functions/deleteTask.yml)}
 
 plugins:
   - serverless-esbuild
@@ -85,15 +44,4 @@ custom:
     concurrency: 10
 
 resources:
-  Resources:
-    TasksTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:service}-${self:provider.stage}-tasks
-        BillingMode: PAY_PER_REQUEST
-        AttributeDefinitions:
-          - AttributeName: taskId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: taskId
-            KeyType: HASH
+  - ${file(resources/dynamodb.yml)}
