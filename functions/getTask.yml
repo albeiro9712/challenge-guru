@@ -1,0 +1,7 @@
+getTask:
+  handler: src/handlers/getTask.handler
+  events:
+    - http:
+        path: tasks/{id}
+        method: get
+        cors: true

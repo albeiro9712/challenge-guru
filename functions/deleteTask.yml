@@ -1,0 +1,7 @@
+deleteTask:
+  handler: src/handlers/deleteTask.handler
+  events:
+    - http:
+        path: tasks/{id}
+        method: delete
+        cors: true
