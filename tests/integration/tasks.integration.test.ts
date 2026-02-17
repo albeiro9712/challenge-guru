@@ -26,7 +26,7 @@ describe("Tasks API - Integration Tests", () => {
       }),
     });
 
-    const body = await response.json();
+    const body: any = await response.json();
 
     expect(response.status).toBe(201);
     expect(body.title).toBe("Integration test task");
@@ -42,7 +42,7 @@ describe("Tasks API - Integration Tests", () => {
   test("GET /tasks/:id - should return the created task", async () => {
     const response = await fetch(`${BASE_URL}/tasks/${taskId}`, { headers });
 
-    const body = await response.json();
+    const body: any = await response.json();
 
     expect(response.status).toBe(200);
     expect(body.taskId).toBe(taskId);
@@ -52,7 +52,7 @@ describe("Tasks API - Integration Tests", () => {
   test("GET /tasks - should return list including the created task", async () => {
     const response = await fetch(`${BASE_URL}/tasks`, { headers });
 
-    const body = await response.json();
+    const body: any = await response.json();
 
     expect(response.status).toBe(200);
     expect(Array.isArray(body)).toBe(true);
@@ -71,7 +71,7 @@ describe("Tasks API - Integration Tests", () => {
       }),
     });
 
-    const body = await response.json();
+    const body: any = await response.json();
 
     expect(response.status).toBe(200);
     expect(body.title).toBe("Updated integration test task");
