@@ -4,6 +4,7 @@ listTasks:
     - http:
         path: tasks
         method: get
+        private: true
   iamRoleStatements:
     - Effect: Allow
       Action:

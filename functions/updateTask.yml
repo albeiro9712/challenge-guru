@@ -4,6 +4,7 @@ updateTask:
     - http:
         path: tasks/{id}
         method: put
+        private: true
   iamRoleStatements:
     - Effect: Allow
       Action:
