@@ -9,20 +9,8 @@ provider:
   region: us-east-1
   environment:
     TASKS_TABLE: !Ref TasksTable
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - dynamodb:PutItem
-            - dynamodb:GetItem
-            - dynamodb:Scan
-            - dynamodb:UpdateItem
-            - dynamodb:DeleteItem
-          Resource: !GetAtt TasksTable.Arn
 
 functions:
-  - ${file(functions/healthCheck.yml)}
   - ${file(functions/createTask.yml)}
   - ${file(functions/listTasks.yml)}
   - ${file(functions/getTask.yml)}
@@ -31,6 +19,7 @@ functions:
 
 plugins:
   - serverless-esbuild
+  - serverless-iam-roles-per-function
 
 custom:
   esbuild:

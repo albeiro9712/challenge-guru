@@ -4,3 +4,8 @@ deleteTask:
     - http:
         path: tasks/{id}
         method: delete
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DeleteItem
+      Resource: !GetAtt TasksTable.Arn

@@ -4,3 +4,8 @@ updateTask:
     - http:
         path: tasks/{id}
         method: put
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:UpdateItem
+      Resource: !GetAtt TasksTable.Arn
