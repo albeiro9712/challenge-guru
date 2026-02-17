@@ -4,3 +4,8 @@ listTasks:
     - http:
         path: tasks
         method: get
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Scan
+      Resource: !GetAtt TasksTable.Arn

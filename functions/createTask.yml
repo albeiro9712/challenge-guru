@@ -4,3 +4,8 @@ createTask:
     - http:
         path: tasks
         method: post
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+      Resource: !GetAtt TasksTable.Arn

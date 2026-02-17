@@ -4,3 +4,8 @@ getTask:
     - http:
         path: tasks/{id}
         method: get
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource: !GetAtt TasksTable.Arn
