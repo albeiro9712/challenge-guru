@@ -4,6 +4,7 @@ createTask:
     - http:
         path: tasks
         method: post
+        private: true
   iamRoleStatements:
     - Effect: Allow
       Action:

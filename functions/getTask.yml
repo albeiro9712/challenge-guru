@@ -4,6 +4,7 @@ getTask:
     - http:
         path: tasks/{id}
         method: get
+        private: true
   iamRoleStatements:
     - Effect: Allow
       Action:

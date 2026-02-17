@@ -9,6 +9,16 @@ provider:
   region: us-east-1
   environment:
     TASKS_TABLE: !Ref TasksTable
+  apiGateway:
+    apiKeys:
+      - ${self:service}-${self:provider.stage}-key
+    usagePlan:
+      quota:
+        limit: 1000
+        period: DAY
+      throttle:
+        burstLimit: 20
+        rateLimit: 10
 
 functions:
   - ${file(functions/createTask.yml)}
