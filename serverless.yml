@@ -31,10 +31,12 @@ plugins:
   - serverless-esbuild
   - serverless-iam-roles-per-function
 
+package:
+  individually: true
+
 custom:
   esbuild:
     bundle: true
-    individually: true
     minify: false
     sourcemap: true
     exclude:
