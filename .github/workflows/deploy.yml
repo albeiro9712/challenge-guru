@@ -62,7 +62,14 @@ jobs:
         run: npm run typecheck
 
       - name: Serverless package
-        run: npx serverless package --stage dev
+        run: npx serverless package --stage ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: serverless-package
+          path: .serverless/
+          retention-days: 1
 
   security:
     runs-on: ubuntu-latest
@@ -98,16 +105,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: serverless-package
+          path: .serverless/
+
       - name: Deploy to DEV
         if: github.ref == 'refs/heads/develop'
-        run: npx serverless deploy --stage dev
+        run: npx serverless deploy --package .serverless --stage dev
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Deploy to PROD
         if: github.ref == 'refs/heads/main'
-        run: npx serverless deploy --stage prod
+        run: npx serverless deploy --package .serverless --stage prod
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

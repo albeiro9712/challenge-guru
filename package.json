@@ -10,10 +10,8 @@
     "prepare": "git config core.hooksPath .githooks",
     "validate": "bash scripts/validate.sh",
     "test": "jest --coverage",
-    "test:watch": "jest --watch",
     "test:integration": "jest --config jest.integration.config.js",
     "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
