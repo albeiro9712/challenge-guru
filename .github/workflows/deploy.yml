@@ -46,35 +46,6 @@ jobs:
       - name: Run unit tests
         run: npm test
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Serverless package
-        run: npx serverless package --stage ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: serverless-package
-          path: .serverless/
-          retention-days: 1
-
   security:
     runs-on: ubuntu-latest
     steps:
@@ -94,7 +65,7 @@ jobs:
         run: npm audit --audit-level=high --production
 
   deploy:
-    needs: [lint, test, build, security]
+    needs: [lint, test, security]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -109,22 +80,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: serverless-package
-          path: .serverless/
-
       - name: Deploy to DEV
         if: github.ref == 'refs/heads/develop'
-        run: npx serverless deploy --package .serverless --stage dev
+        run: npx serverless deploy --stage dev
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Deploy to PROD
         if: github.ref == 'refs/heads/main'
-        run: npx serverless deploy --package .serverless --stage prod
+        run: npx serverless deploy --stage prod
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
