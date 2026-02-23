@@ -23,28 +23,14 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     const expressionValues: Record<string, unknown> = {};
     const expressionNames: Record<string, string> = {};
 
-    if (input.title !== undefined) {
-      expressionParts.push("#title = :title");
-      expressionValues[":title"] = input.title;
-      expressionNames["#title"] = "title";
-    }
+    const updatableFields: (keyof UpdateTaskInput)[] = ["title", "description", "status", "priority"];
 
-    if (input.description !== undefined) {
-      expressionParts.push("#description = :description");
-      expressionValues[":description"] = input.description;
-      expressionNames["#description"] = "description";
-    }
-
-    if (input.status !== undefined) {
-      expressionParts.push("#status = :status");
-      expressionValues[":status"] = input.status;
-      expressionNames["#status"] = "status";
-    }
-
-    if (input.priority !== undefined) {
-      expressionParts.push("#priority = :priority");
-      expressionValues[":priority"] = input.priority;
-      expressionNames["#priority"] = "priority";
+    for (const field of updatableFields) {
+      if (input[field] !== undefined) {
+        expressionParts.push(`#${field} = :${field}`);
+        expressionValues[`:${field}`] = input[field];
+        expressionNames[`#${field}`] = field;
+      }
     }
 
     if (expressionParts.length === 0) {

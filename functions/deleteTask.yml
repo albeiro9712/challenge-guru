@@ -4,6 +4,7 @@ deleteTask:
     - http:
         path: tasks/{id}
         method: delete
+        private: true
   iamRoleStatements:
     - Effect: Allow
       Action:

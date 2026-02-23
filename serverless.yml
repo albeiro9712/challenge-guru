@@ -9,6 +9,16 @@ provider:
   region: us-east-1
   environment:
     TASKS_TABLE: !Ref TasksTable
+  apiGateway:
+    apiKeys:
+      - ${self:service}-${self:provider.stage}-key
+    usagePlan:
+      quota:
+        limit: 100
+        period: DAY
+      throttle:
+        burstLimit: 3
+        rateLimit: 3
 
 functions:
   - ${file(functions/createTask.yml)}
@@ -20,6 +30,9 @@ functions:
 plugins:
   - serverless-esbuild
   - serverless-iam-roles-per-function
+
+package:
+  individually: true
 
 custom:
   esbuild:
