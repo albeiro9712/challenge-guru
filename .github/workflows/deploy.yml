@@ -25,6 +25,9 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+      - name: TypeScript type check
+        run: npm run typecheck
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -58,11 +61,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: TypeScript type check
-        run: npm run typecheck
-
       - name: Serverless package
         run: npx serverless package --stage ${{ github.ref == 'refs/heads/main' && 'prod' || 'dev' }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: us-east-1
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
