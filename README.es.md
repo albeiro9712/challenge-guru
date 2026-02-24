@@ -411,7 +411,9 @@ npm audit --audit-level=high --omit=dev
 ### Automatizado (vía CI/CD)
 
 Push a `develop` → despliega a `dev`
-Push a `main` → despliega a `prod`
+Push a `main` → espera aprobación manual → despliega a `prod`
+
+> **Los despliegues a producción requieren aprobación manual.** Cuando un push llega a `main`, el pipeline se pausa y envía una notificación. Un revisor debe aprobar el despliegue desde la UI de GitHub Actions antes de que continúe.
 
 ### Manual
 
@@ -452,15 +454,16 @@ npm run remove:prod
 El workflow de GitHub Actions (`.github/workflows/deploy.yml`) se activa en push a `develop` o `main`.
 
 ```
-push a develop / main
-         │
-         ├─► lint        (ESLint + tsc --noEmit)
-         ├─► test        (Pruebas unitarias Jest + cobertura)
-         ├─► security    (npm audit --audit-level=high)
-         └─► deploy      ──► dev  (rama develop)
-                          └─► prod (rama main)
-                                │
-                                └─► integration-tests (solo dev)
+push a develop                     push a main
+        │                                  │
+        ▼                                  ▼
+lint → security → test             lint → security → test
+        │                                  │
+        ▼                                  ▼
+   deploy-dev                      [aprobación manual]
+        │                                  │
+        ▼                                  ▼
+integration-tests                    deploy-prod
 ```
 
 ### Secrets Requeridos en GitHub
