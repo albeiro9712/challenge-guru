@@ -53,6 +53,8 @@ API Gateway (REST API + API Key Auth)
 
 Each Lambda function is packaged individually using esbuild and has its own IAM role following the principle of least privilege.
 
+![AWS API Gateway - Resources](docs/images/aws-api-gateway.png)
+
 ## Tech Stack
 
 | Category | Technology |
@@ -337,6 +339,8 @@ interface Task {
 - **Billing mode:** PAY_PER_REQUEST (on-demand)
 - **Table name:** `task-manager-api-{stage}-tasks`
 
+![AWS DynamoDB - task-manager-api-dev-tasks](docs/images/aws-dynamodb.png)
+
 ## Configuration
 
 ### Stages
@@ -465,6 +469,16 @@ lint → security → test             lint → security → test
         ▼                                  ▼
 integration-tests                    deploy-prod
 ```
+
+### Pipeline Screenshots
+
+**Deploy to `develop` (dev environment):**
+
+![CI/CD Pipeline - Deploy Dev](docs/images/pipeline-deploy-dev.png)
+
+**Deploy to `main` (production environment):**
+
+![CI/CD Pipeline - Deploy Prod](docs/images/pipeline-deploy-prod.png)
 
 ### Required GitHub Secrets
 
